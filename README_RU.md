@@ -33,6 +33,26 @@ mise trust
 mise run deps
 ```
 
+## Команды управления окружением
+
+| Команда | Что делает |
+| --- | --- |
+| `mise run worktree:new -- task-name` | Создаёт ветку `agent/task-name` и отдельную worktree. |
+| `mise run deps` | Собирает актуальный PHP-образ и устанавливает locked Composer-зависимости для текущей worktree. |
+| `mise run shared:init` | Создаёт или запускает постоянную shared MariaDB и общий uploads volume. |
+| `mise run shared:up` | Подготавливает `.env` и запускает контейнер приложения текущей worktree с shared БД. |
+| `mise run isolated:up` | Подготавливает `.env` и запускает приложение, отдельную MariaDB и uploads volumes текущей worktree. |
+| `mise run status` | Показывает контейнеры текущей worktree. |
+| `mise run url` | Печатает локальный URL текущей worktree. |
+| `mise run check` | Выполняет PHP syntax lint и smoke test внутри PHP-контейнера. |
+| `mise run down` | Останавливает и удаляет контейнеры текущей worktree; shared данные не затрагивает. |
+| `mise run destroy` | Удаляет только isolated DB/uploads volumes текущей worktree; в shared режиме заблокирован. |
+| `mise run shared:down` | Останавливает shared MariaDB, сохраняя её данные и uploads. |
+| `mise run db:snapshot` | Перезаписывает общий локальный dump shared БД для новых isolated задач. |
+
+Обычный рабочий цикл: `deps` → `shared:up` или `isolated:up` → `check` →
+`down`. Для временной destructive-задачи после проверки используйте `destroy`.
+
 ### Обычная задача: общая БД
 
 Используйте, если нужны реальные посты, CPT, настройки и uploads, но задача не
