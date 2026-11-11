@@ -19,6 +19,9 @@ case "$action" in
   shared:init)
     docker compose -p wp-shared -f "$root/compose.shared-db.yml" up -d
     ;;
+  shared:down)
+    docker compose -p wp-shared -f "$root/compose.shared-db.yml" down
+    ;;
   shared:up)
     bash "$root/scripts/prepare-env.sh" shared
     docker compose -p wp-shared -f "$root/compose.shared-db.yml" up -d
@@ -72,7 +75,7 @@ case "$action" in
     echo "Wrote infra/snapshots/wordpress.sql.gz (ignored by Git)."
     ;;
   *)
-    echo "Usage: $0 {shared:init|shared:up|isolated:up|down|destroy|status|url|deps|check|db:snapshot}" >&2
+    echo "Usage: $0 {shared:init|shared:down|shared:up|isolated:up|down|destroy|status|url|deps|check|db:snapshot}" >&2
     exit 64
     ;;
 esac

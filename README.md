@@ -90,6 +90,7 @@ machine.
 | Command | Effect |
 | --- | --- |
 | `mise run shared:init` | Starts the one persistent shared MariaDB and uploads volume. |
+| `mise run shared:down` | Stops shared MariaDB while preserving its data and uploads. |
 | `mise run shared:up` | Starts this worktree's app against shared data. |
 | `mise run isolated:up` | Starts this worktree's app, database, and uploads volumes. |
 | `mise run deps` | Runs locked Composer installation in the PHP container. |

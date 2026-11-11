@@ -2,6 +2,10 @@
 description = "Start the one shared MariaDB and uploads volume"
 run = "bash scripts/compose.sh shared:init"
 
+[tasks."shared:down"]
+description = "Stop the shared MariaDB without deleting its persistent data"
+run = "bash scripts/compose.sh shared:down"
+
 [tasks."shared:up"]
 description = "Run this worktree against shared WordPress data"
 run = "bash scripts/compose.sh shared:up"
