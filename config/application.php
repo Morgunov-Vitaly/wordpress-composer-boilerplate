@@ -35,7 +35,9 @@ define('DISALLOW_FILE_EDIT', true);
 define('WP_DEBUG', WP_ENVIRONMENT_TYPE === 'development');
 define('WP_DEBUG_LOG', WP_DEBUG);
 define('WP_DEBUG_DISPLAY', false);
-define('ABSPATH', $projectRoot . '/public/wp/');
+if (!defined('ABSPATH')) {
+    define('ABSPATH', $projectRoot . '/public/wp/');
+}
 
 $environment = WP_ENVIRONMENT_TYPE;
 $environmentFile = __DIR__ . '/environments/' . $environment . '.php';
