@@ -6,6 +6,11 @@ use Dotenv\Dotenv;
 
 $projectRoot = dirname(__DIR__);
 
+$autoload = $projectRoot . '/vendor/autoload.php';
+if (is_readable($autoload)) {
+    require_once $autoload;
+}
+
 if (class_exists(Dotenv::class) && file_exists($projectRoot . '/.env')) {
     Dotenv::createImmutable($projectRoot)->safeLoad();
 }
