@@ -5,6 +5,7 @@ RUN apt-get update \
     && docker-php-ext-install mysqli \
     && a2enmod rewrite \
     && sed -ri -e 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/*.conf \
+    && git config --system --add safe.directory /var/www/html \
     && rm -rf /var/lib/apt/lists/*
 
 COPY --from=composer:2.8.12 /usr/bin/composer /usr/local/bin/composer

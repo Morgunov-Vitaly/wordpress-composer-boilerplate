@@ -5,5 +5,13 @@ services:
       dockerfile: docker/php.Dockerfile
     volumes:
       - .:/var/www/html
+      - composer_cache:/tmp/composer-cache
+    environment:
+      COMPOSER_CACHE_DIR: /tmp/composer-cache
     ports:
       - "127.0.0.1:${APP_PORT}:80"
+
+volumes:
+  composer_cache:
+    external: true
+    name: wordpress-composer-cache

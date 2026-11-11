@@ -15,6 +15,10 @@ mode_from_env() {
   sed -n 's/^DB_MODE=//p' "$root/.env"
 }
 
+ensure_composer_cache() {
+  docker volume create wordpress-composer-cache >/dev/null
+}
+
 case "$action" in
   shared:init)
     docker compose -p wp-shared -f "$root/compose.shared-db.yml" up -d
@@ -24,14 +28,17 @@ case "$action" in
     ;;
   shared:up)
     bash "$root/scripts/prepare-env.sh" shared
+    ensure_composer_cache
     docker compose -p wp-shared -f "$root/compose.shared-db.yml" up -d
     "${base[@]}" -f "$root/compose.shared-app.yml" up -d --build
     ;;
   isolated:up)
     bash "$root/scripts/prepare-env.sh" isolated
+    ensure_composer_cache
     "${base[@]}" -f "$root/compose.isolated.yml" up -d --build
     ;;
   down)
+    ensure_composer_cache
     case "$(mode_from_env)" in
       shared) "${base[@]}" -f "$root/compose.shared-app.yml" down --remove-orphans ;;
       isolated) "${base[@]}" -f "$root/compose.isolated.yml" down --remove-orphans ;;
@@ -43,6 +50,7 @@ case "$action" in
       echo "Refusing to remove volumes: destroy is available only in isolated mode." >&2
       exit 1
     fi
+    ensure_composer_cache
     "${base[@]}" -f "$root/compose.isolated.yml" down -v --remove-orphans
     ;;
   status)
@@ -57,10 +65,14 @@ case "$action" in
     fi
     ;;
   deps)
-    APP_PORT="$(bash "$root/scripts/task-context.sh" port)" \
+    ensure_composer_cache
+    port="$(bash "$root/scripts/task-context.sh" port)"
+    APP_PORT="$port" "${base[@]}" build app
+    APP_PORT="$port" \
       "${base[@]}" run --rm app composer install --no-interaction --prefer-dist --no-progress
     ;;
   check)
+    ensure_composer_cache
     case "$(mode_from_env)" in
       shared) "${base[@]}" -f "$root/compose.shared-app.yml" run --rm app composer run check ;;
       isolated) "${base[@]}" -f "$root/compose.isolated.yml" run --rm app composer run check ;;

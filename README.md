@@ -21,6 +21,11 @@ runtime and application containers; it never shares those with another task.
 Docker Compose assigns every task a unique project name and deterministic local
 port, so two branches can run at once.
 
+Each worktree still has its own ignored `vendor/` and `public/wp/` directories:
+their lock files may diverge. The Docker volume `wordpress-composer-cache` is
+the only shared dependency resource; it stores Composer download archives to
+avoid downloading the same packages again.
+
 ```text
 main checkout                 integration work
 ../.worktrees/feature-a       agent A + its application container
