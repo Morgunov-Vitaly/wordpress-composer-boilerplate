@@ -55,8 +55,8 @@ mise run check
 ```
 
 Open the URL printed by `mise run url` and complete the normal WordPress setup.
-The initial isolated database is empty. When it is no longer needed, run
-`mise run destroy`.
+The initial isolated database is empty unless a shared local snapshot exists.
+When it is no longer needed, run `mise run destroy`.
 
 ## Working with AI agents
 
@@ -85,10 +85,11 @@ mise run shared:init
 mise run db:snapshot
 ```
 
-This writes `infra/snapshots/wordpress.sql.gz`. It is ignored by Git, and the
-MariaDB container loads it into a brand-new isolated database automatically.
-Sanitize personal data and secrets before copying a snapshot outside this
-machine.
+This writes one local, shared snapshot at
+`.git/wordpress-snapshots/wordpress.sql.gz`. Every linked worktree uses that
+same file when it creates a brand-new isolated MariaDB volume. It is outside
+the tracked files and never enters Git. Sanitize personal data and secrets
+before copying a snapshot outside this machine.
 
 ### Lifecycle commands
 

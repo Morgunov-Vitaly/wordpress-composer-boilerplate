@@ -25,5 +25,6 @@ mise run down
 
 `mise run destroy` deletes volumes only after it confirms `DB_MODE=isolated`.
 Never bypass that guard. To seed fresh isolated databases from realistic local
-data, a human first runs `mise run db:snapshot`; the resulting dump is ignored
-by Git and must be sanitized before sharing outside the machine.
+data, a human first runs `mise run db:snapshot`; it replaces the one local
+snapshot shared by all linked worktrees, outside Git, and must be sanitized
+before sharing outside the machine.

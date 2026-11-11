@@ -16,7 +16,8 @@ services:
     volumes:
       - isolated_db_data:/var/lib/mysql
       # An optional sanitized .sql or .sql.gz dump is loaded on first start.
-      - ./infra/snapshots:/docker-entrypoint-initdb.d:ro
+      # scripts/compose.sh passes one directory shared by all Git worktrees.
+      - ${WORDPRESS_SNAPSHOT_DIR:-./infra/snapshots}:/docker-entrypoint-initdb.d:ro
     healthcheck:
       test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
       interval: 5s

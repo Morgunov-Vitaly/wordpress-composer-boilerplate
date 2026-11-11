@@ -19,6 +19,16 @@ ensure_composer_cache() {
   docker volume create wordpress-composer-cache >/dev/null
 }
 
+snapshot_dir() {
+  local common_git_dir
+  common_git_dir="$(git rev-parse --path-format=absolute --git-common-dir)"
+  printf '%s/wordpress-snapshots\n' "$common_git_dir"
+}
+
+ensure_snapshot_dir() {
+  mkdir -p "$(snapshot_dir)"
+}
+
 case "$action" in
   shared:init)
     docker compose -p wp-shared -f "$root/compose.shared-db.yml" up -d
@@ -35,7 +45,9 @@ case "$action" in
   isolated:up)
     bash "$root/scripts/prepare-env.sh" isolated
     ensure_composer_cache
-    "${base[@]}" -f "$root/compose.isolated.yml" up -d --build
+    ensure_snapshot_dir
+    WORDPRESS_SNAPSHOT_DIR="$(snapshot_dir)" \
+      "${base[@]}" -f "$root/compose.isolated.yml" up -d --build
     ;;
   down)
     ensure_composer_cache
@@ -80,11 +92,12 @@ case "$action" in
     esac
     ;;
   db:snapshot)
-    mkdir -p "$root/infra/snapshots"
+    ensure_snapshot_dir
+    snapshot="$(snapshot_dir)/wordpress.sql.gz"
     docker compose -p wp-shared -f "$root/compose.shared-db.yml" exec -T -e MYSQL_PWD=wordpress db \
       mariadb-dump -uwordpress --single-transaction --routines --events wordpress \
-      | gzip -c > "$root/infra/snapshots/wordpress.sql.gz"
-    echo "Wrote infra/snapshots/wordpress.sql.gz (ignored by Git)."
+      | gzip -c > "$snapshot"
+    echo "Wrote shared local snapshot: $snapshot"
     ;;
   *)
     echo "Usage: $0 {shared:init|shared:down|shared:up|isolated:up|down|destroy|status|url|deps|check|db:snapshot}" >&2
