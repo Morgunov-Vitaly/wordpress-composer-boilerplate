@@ -54,10 +54,15 @@ case "$action" in
     fi
     ;;
   deps)
-    "${base[@]}" run --rm app composer install --no-interaction --prefer-dist --no-progress
+    APP_PORT="$(bash "$root/scripts/task-context.sh" port)" \
+      "${base[@]}" run --rm app composer install --no-interaction --prefer-dist --no-progress
     ;;
   check)
-    "${base[@]}" run --rm app composer run check
+    case "$(mode_from_env)" in
+      shared) "${base[@]}" -f "$root/compose.shared-app.yml" run --rm app composer run check ;;
+      isolated) "${base[@]}" -f "$root/compose.isolated.yml" run --rm app composer run check ;;
+      *) echo "Unknown DB_MODE in .env" >&2; exit 1 ;;
+    esac
     ;;
   db:snapshot)
     mkdir -p "$root/infra/snapshots"
