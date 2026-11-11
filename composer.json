@@ -1,0 +1,41 @@
+{
+  "name": "morgunov-vitaly/wordpress-composer-boilerplate",
+  "description": "A small Composer-based WordPress starter used for CI/CD learning.",
+  "type": "project",
+  "license": "MIT",
+  "minimum-stability": "stable",
+  "prefer-stable": true,
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://wpackagist.org"
+    }
+  ],
+  "require": {
+    "php": ">=8.2",
+    "roots/bedrock-autoloader": "^1.0",
+    "roots/wordpress": "^6.8",
+    "vlucas/phpdotenv": "^5.6"
+  },
+  "require-dev": {
+    "roave/security-advisories": "dev-latest"
+  },
+  "extra": {
+    "wordpress-install-dir": "public/wp"
+  },
+  "config": {
+    "allow-plugins": {
+      "composer/installers": true,
+      "roots/wordpress-core-installer": true
+    },
+    "sort-packages": true
+  },
+  "scripts": {
+    "lint": "find config public/content tests -type f -name '*.php' -print0 | xargs -0 -n1 php -l",
+    "test": "php tests/smoke.php",
+    "check": [
+      "@lint",
+      "@test"
+    ]
+  }
+}

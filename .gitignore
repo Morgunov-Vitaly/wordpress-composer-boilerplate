@@ -1,0 +1,12 @@
+/.env
+/.env.*
+!/.env.example
+/vendor/
+/public/wp/
+/public/content/plugins/
+/public/content/themes/*
+!/public/content/themes/.gitkeep
+!/public/content/themes/learning-theme/
+!/public/content/themes/learning-theme/**
+/public/content/uploads/
+/.phpunit.result.cache
