@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fe9abf27e22e07289ff3b2668d4eb15a",
+    "content-hash": "0ba4aff98793740815bd40586d72e739",
     "packages": [
         {
             "name": "graham-campbell/result-type",
@@ -220,7 +220,7 @@
         },
         {
             "name": "roots/wordpress",
-            "version": "6.9.11",
+            "version": "7.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/roots/wordpress.git",
@@ -330,23 +330,23 @@
         },
         {
             "name": "roots/wordpress-no-content",
-            "version": "6.9.11",
+            "version": "7.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/WordPress/WordPress.git",
-                "reference": "6.9.11"
+                "reference": "7.1.4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.w.org/release/wordpress-6.9.11-no-content.zip",
-                "reference": "6.9.11",
-                "shasum": "a4db350fbbb8a53dd16eaa53eaeb73026e6e4eff"
+                "url": "https://downloads.w.org/release/wordpress-7.1.4-no-content.zip",
+                "reference": "7.1.4",
+                "shasum": "1dd4bfa7b13dec725c0062a3fb62ba0536cb8699"
             },
             "require": {
-                "php": ">= 7.2.24"
+                "php": ">= 7.4"
             },
             "provide": {
-                "wordpress/core-implementation": "6.9.11"
+                "wordpress/core-implementation": "7.1.4"
             },
             "suggest": {
                 "ext-curl": "Performs remote request operations.",
@@ -397,7 +397,7 @@
                     "type": "other"
                 }
             ],
-            "time": "2026-10-28T17:15:55+00:00"
+            "time": "2026-10-28T17:15:58+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",
