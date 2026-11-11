@@ -6,7 +6,7 @@
 
 - WordPress core и PHP-зависимости устанавливаются Composer, а не хранятся в Git.
 - `public/content/` содержит версионируемый код темы и mu-plugins.
-- Docker фиксирует runtime: PHP 8.3.36, Apache и Composer 2.8.12.
+- Docker фиксирует runtime: PHP 8.3.36-FPM, Nginx и Composer 2.8.12.
 - `mise` даёт единый набор lifecycle-команд.
 - GitHub Actions запускает проверку Composer, PHP syntax lint и smoke test на каждом PR и push в `main`.
 

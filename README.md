@@ -14,6 +14,9 @@ Small WordPress starter intended for learning CI/CD through GitHub Actions and J
 - [mise](https://mise.jdx.dev/) as the task runner and project command surface
 - Git 2.20+
 
+The local web stack is Nginx with PHP-FPM 8.3.36. Nginx is the only service
+that publishes a host port; the PHP container is reachable only from Docker.
+
 ## Parallel worktrees and environments
 
 One Git worktree equals one task and one branch. The worktree owns its PHP

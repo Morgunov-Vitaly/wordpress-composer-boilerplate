@@ -1,10 +1,8 @@
-FROM php:8.3.36-apache
+FROM php:8.3.36-fpm
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends git unzip \
     && docker-php-ext-install mysqli \
-    && a2enmod rewrite \
-    && sed -ri -e 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/*.conf \
     && git config --system --add safe.directory /var/www/html \
     && rm -rf /var/lib/apt/lists/*
 

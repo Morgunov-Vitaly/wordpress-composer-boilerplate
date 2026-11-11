@@ -6,6 +6,12 @@ services:
     volumes:
       - isolated_uploads:/var/www/html/public/content/uploads
 
+  nginx:
+    depends_on:
+      - app
+    volumes:
+      - isolated_uploads:/var/www/html/public/content/uploads:ro
+
   db:
     image: mariadb:11.4
     environment:

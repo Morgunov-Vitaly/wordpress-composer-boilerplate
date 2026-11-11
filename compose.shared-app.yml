@@ -5,6 +5,12 @@ services:
     volumes:
       - shared_uploads:/var/www/html/public/content/uploads
 
+  nginx:
+    networks:
+      - shared_db
+    volumes:
+      - shared_uploads:/var/www/html/public/content/uploads:ro
+
 networks:
   shared_db:
     external: true
