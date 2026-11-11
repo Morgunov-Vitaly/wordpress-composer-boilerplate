@@ -29,6 +29,10 @@ their lock files may diverge. The Docker volume `wordpress-composer-cache` is
 the only shared dependency resource; it stores Composer download archives to
 avoid downloading the same packages again.
 
+In shared mode the PHP container alone joins the shared database network. Nginx
+and PHP-FPM communicate through a private Compose network for that worktree,
+so the `app` FastCGI hostname can never resolve to another task's PHP container.
+
 ```text
 main checkout                 integration work
 ../.worktrees/feature-a       agent A + its application container

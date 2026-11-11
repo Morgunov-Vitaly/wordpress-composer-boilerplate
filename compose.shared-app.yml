@@ -1,13 +1,14 @@
 services:
   app:
     networks:
+      - default
       - shared_db
     volumes:
       - shared_uploads:/var/www/html/public/content/uploads
 
   nginx:
     networks:
-      - shared_db
+      - default
     volumes:
       - shared_uploads:/var/www/html/public/content/uploads:ro
 
