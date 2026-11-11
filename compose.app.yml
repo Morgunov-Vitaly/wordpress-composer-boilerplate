@@ -1,0 +1,9 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/php.Dockerfile
+    volumes:
+      - .:/var/www/html
+    ports:
+      - "127.0.0.1:${APP_PORT}:80"

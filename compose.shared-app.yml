@@ -1,0 +1,16 @@
+services:
+  app:
+    networks:
+      - shared_db
+    volumes:
+      - shared_uploads:/var/www/html/public/content/uploads
+
+networks:
+  shared_db:
+    external: true
+    name: wordpress-shared-db
+
+volumes:
+  shared_uploads:
+    external: true
+    name: wordpress-shared-uploads

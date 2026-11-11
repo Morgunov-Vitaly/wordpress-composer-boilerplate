@@ -1,0 +1,30 @@
+services:
+  db:
+    image: mariadb:11.4
+    environment:
+      MARIADB_DATABASE: wordpress
+      MARIADB_USER: wordpress
+      MARIADB_PASSWORD: wordpress
+      MARIADB_ROOT_PASSWORD: root
+    volumes:
+      - shared_db_data:/var/lib/mysql
+      # This mount creates the reusable uploads volume during shared:init.
+      - shared_uploads:/shared-uploads
+    networks:
+      shared_db:
+        aliases: [db]
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+networks:
+  shared_db:
+    name: wordpress-shared-db
+
+volumes:
+  shared_db_data:
+    name: wordpress-shared-db-data
+  shared_uploads:
+    name: wordpress-shared-uploads

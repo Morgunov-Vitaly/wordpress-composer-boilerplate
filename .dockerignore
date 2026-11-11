@@ -1,0 +1,7 @@
+.git
+.env
+vendor
+public/wp
+public/content/uploads
+infra/snapshots/*.sql
+infra/snapshots/*.sql.gz

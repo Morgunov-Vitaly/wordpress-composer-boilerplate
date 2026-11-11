@@ -1,0 +1,43 @@
+[tasks."shared:init"]
+description = "Start the one shared MariaDB and uploads volume"
+run = "bash scripts/compose.sh shared:init"
+
+[tasks."shared:up"]
+description = "Run this worktree against shared WordPress data"
+run = "bash scripts/compose.sh shared:up"
+
+[tasks."isolated:up"]
+description = "Run this worktree with its own MariaDB and uploads volumes"
+run = "bash scripts/compose.sh isolated:up"
+
+[tasks.down]
+description = "Stop this worktree's application and isolated services"
+run = "bash scripts/compose.sh down"
+
+[tasks.destroy]
+description = "Delete this worktree's isolated database and uploads volumes"
+run = "bash scripts/compose.sh destroy"
+
+[tasks.status]
+description = "Show containers for this worktree"
+run = "bash scripts/compose.sh status"
+
+[tasks.url]
+description = "Print the current worktree URL"
+run = "bash scripts/compose.sh url"
+
+[tasks.deps]
+description = "Install locked PHP dependencies in this worktree"
+run = "bash scripts/compose.sh deps"
+
+[tasks.check]
+description = "Run project checks in the PHP container"
+run = "bash scripts/compose.sh check"
+
+[tasks."db:snapshot"]
+description = "Create an ignored, local seed snapshot from shared MariaDB"
+run = "bash scripts/compose.sh db:snapshot"
+
+[tasks."worktree:new"]
+description = "Create a new agent worktree: mise run worktree:new -- task-name"
+run = "bash scripts/new-worktree.sh"

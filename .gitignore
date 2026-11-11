@@ -10,3 +10,6 @@
 !/public/content/themes/learning-theme/**
 /public/content/uploads/
 /.phpunit.result.cache
+/infra/snapshots/*.sql
+/infra/snapshots/*.sql.gz
+!/infra/snapshots/.gitkeep
